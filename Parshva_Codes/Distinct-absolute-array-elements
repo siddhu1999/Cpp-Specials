@@ -1,0 +1,116 @@
+/**	
+	https://practice.geeksforgeeks.org/problems/distinct-absolute-array-elements/0
+
+Count the number of distinct absolute values from a sorted array containing N integers. An absolute value of a number is | a |  ( positive ) value of it.
+ 
+
+Input
+The first line of input contains an integer T denoting the number of test cases. Then T test cases
+follow. 
+The first line of each test case contains an integer N, where N is the size of the array A[ ].
+The second line of each test case contains N space separated sorted integers, denoting elements of the array
+A[ ].
+
+Note: The array can contain duplicate values.
+ 
+
+Output:
+For each test case output a single line containing the no of distinct absolute values present in the array .
+Remember to output the answer of each test case in a new line.
+ 
+
+Constraints:
+1 <= T <= 100
+1 <= N <= 30
+-10^9<= A[i] <= 3*10^9
+ 
+
+Examples :
+
+Input:
+3
+4
+-35 73 73 73 
+9
+-44 -31 -6 6 46 52 52 55 93
+6
+-3 -2 0 3 4 5
+
+
+Output:
+2
+7
+5
+
+Expected Time Complexity:    <============== MOST IMP POINT .
+O(n)
+**/
+//___________________________________________________________________________________
+#include<iostream>
+using namespace std;
+
+int hash1(int m,int n)
+{
+	return((m*m)%n);
+}
+
+int hash2(int n)
+{
+	return(n+1);
+}
+
+int main()
+{
+	int t=0;
+	cin>>t;
+	while(t!=0)
+	{
+		int n=0,i=0,temp=0;
+		cin>>n;
+		int a[n]={},b[n]={},h1=0,h2=0;
+		while(i<n)
+		{
+			cin>>temp;
+			h1=hash1(temp,n);
+			h2=hash2(temp);
+			if(b[h1]==0 and a[h1]==0)
+			{
+				a[h1]=temp;
+				b[h1]=h2;
+			}
+			else
+			{
+				while((a[h1]!=0 or b[h1]!=0) and a[h1]!=temp)
+				{
+					h1++;
+				}
+				if(a[h1]==0 or b[h1]==0 )
+				{
+					a[h1]=temp;
+					b[h1]=h2;
+				}
+				else
+				{
+					if(a[h1]==temp)
+					{
+						//do nothing
+					}
+				}
+			}
+			i++;
+		}
+		i=0;
+		int count=0;
+		while(i<n)
+		{
+			if(b[i]!=0)
+				count++;
+			i++;
+		}
+		cout<<count<<"\n";
+		t--;
+	}
+}
+
+
+
