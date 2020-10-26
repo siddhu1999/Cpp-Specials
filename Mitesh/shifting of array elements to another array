@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<iostream>
+using namespace std;
+int main()
+{
+	int a[50],b[50],i,m,n,loc;
+    cout<<"enter the size of elements : ";
+	cin>>m;
+	cout<<"enter the elements : ";
+	for(i=0;i<m;i++)
+	{
+		cin>>a[i];
+	}
+	cout<<"\n";
+	cout<<"enter the size of elements : ";
+	cin>>n;
+	cout<<"enter elements : ";
+		for(i=0;i<n;i++)
+		{
+			cin>>b[i];
+		}
+	
+//	
+//	for(i=0;i<m;i++)
+//	{
+//		cin>>a[i];
+//		for(i=0;i<n;i++)
+//		{
+//			cin>>b[i];
+//		}
+//    }
+    cout<<"enter the loc of the element :";
+    cin>>loc;
+    
+    for(i=m-1;i>=loc;i--)
+    {
+    	a[i+n]=a[i];
+	}
+	for(i=0;i<n;i++)
+	{
+		a[loc+i]=b[i];
+	}
+	for(i=0;i<m;i++)
+	{
+		cout<<a[i];
+	}
+		
+}
