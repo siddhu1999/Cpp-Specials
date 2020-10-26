@@ -1,0 +1,126 @@
+//https://practice.geeksforgeeks.org/problems/minimum-changes-to-make-all-substrings-distinct/0
+/**Given a string s, find the minimum number of changes required to it so that all substrings of the string become distinct.
+
+Note: length of string is atmost 26.
+
+Input:
+The first line contains an integer T, number of test cases. For each testcase there is only one line containing s atmost 26 characters.
+
+Output:
+For each testcase in new line, print the minimum number of changes to the string.
+
+Constraints:
+1 <= T <= 100
+1 <= |s| <= 26
+
+Example:
+Input
+3
+aab
+aebaecedabbee
+ab
+
+Output
+1
+8
+0
+
+Explanation
+Testcase 1: If we change one instance of 'a' to any character from 'c' to 'z', we get all distinct substrings.
+Testcase 2:  We need to change 2 a's, 2 b's and 4 e's to get distinct substrings.
+Testcase 3: As no change is required hence 0.**/
+#include<string.h>
+#include<iostream>
+using namespace std;
+char dis[26];
+char* distinct(char *str)
+{
+	//char dis[26];
+	int i=0;
+	int j=0;
+	while(str[i]!='\0')
+	{
+		if(strchr(dis,str[i])==NULL)
+		{
+			dis[j]=str[i];
+			j++;
+		}
+		i++;
+	}
+	return(dis);
+}
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t!=0)
+	{
+		char str[26]={};
+		cin>>str;
+		char *s;
+		s=(distinct(str));
+		int i=0,j=0,count=0,final_count=0;
+		while(s[i]!='\0')
+		{
+			j=0;
+			while(str[j]!='\0')
+			{
+				if(s[i]==str[j])
+				{
+					count++;
+				}
+				j++;
+			}
+
+			final_count=final_count+(count-1);
+			count=0;
+			i++;
+		}
+		cout<<final_count;
+		t--;
+	}
+	
+}
+/** Expert code :
+
+
+#include<iostream>
+using namespace std;
+
+int minimumChanges(string str)
+{
+    int hstr[256];
+    fill(hstr, hstr+256, -1);
+    
+    for(int i = 0; i < str.size(); i++)
+    {
+        hstr[str[i]]++;
+    }
+    
+    int res = 0;
+    for(int i = 0; i < 256; i++)
+    {
+        if(hstr[i] != -1)
+        {
+            res += hstr[i];
+        }
+    }
+    
+    return res;
+}
+int main()
+{
+	int T;
+	cin >> T;
+	
+	while(T--)
+	{
+	    string str;
+	    cin >> str;
+	    
+	    cout << minimumChanges(str) << endl;
+	}
+	return 0;
+}
+**/
