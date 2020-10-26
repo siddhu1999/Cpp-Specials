@@ -1,0 +1,22 @@
+//Given a number N. Find a number K such that product of digits of K must be equal to N.
+//Note : K must be as small as possible
+#include<iostream>
+using namespace std;
+int main()
+{
+	int t,n;
+	cin>>t;
+	cin>>n;
+	for(int i=1;i<n;i++)
+	{
+		for(int j=1;j<n;j++)
+		{
+			if(i*j==n)
+			{
+				cout<<i<<j;
+			}
+		}
+	}
+	cout<<"\n";
+	return 0;
+}
