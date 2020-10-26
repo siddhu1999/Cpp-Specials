@@ -1,0 +1,223 @@
+#include<stdlib.h>
+#include<fstream>
+#include<string.h>
+#include<process.h>
+#include<iostream>
+using namespace std;
+#define sgst 1.5
+#define cgst 1.5
+#define ha 1
+#define na 0
+float cost=0,stoke=0,count=0;
+
+
+class customer{
+	private:
+		float cprice,itemweight,labour,grandtotal;
+		char cname[15],caddress[20],item[10];
+		int mob[10],billno;
+		int flag;
+		customer *link;
+	public:
+		customer()
+		{
+			link=NULL;
+		}
+		customer* cget(customer *f);
+		void cdisplay(customer *f);
+		void leftdisplay(customer *f);
+};
+customer* customer::cget(customer *f)
+{
+	int i=0;
+	customer *n=new customer,*temp;
+	ofstream out("mangaldeep.txt",ios::app);
+	temp=f;
+	if(temp==NULL)
+	{
+		out<<"\n************************************************************************\n";
+		count++;
+		out<<"Bill NO. :"<<count<<"\n";
+		n->billno=count;
+		cout<<"\nEnter the name of customer :";fflush(stdin);
+		gets(n->cname);fflush(stdin);
+		out<<"Name :"<<n->cname<<"\n";
+		cout<<"\nEnter the address of customer :";
+		gets(n->caddress);fflush(stdin);
+		out<<"\t\tAddress :"<<n->caddress<<"\n";
+		cout<<"\nEnter the mobile no. of customer :";
+		out<<"Mobile No. :";
+		for(i=0;i<10;i++)
+		{
+			cin>>n->mob[i];
+			out<<n->mob[i];
+		}fflush(stdin);
+		cout<<"\nEnter the item purchaced by customer :";
+		gets(n->item);fflush(stdin);
+		out<<"\tItem purchased :"<<n->item<<"\t";
+		cout<<"\nEnter the weight of "<<n->item<<" :";
+		cin>>n->itemweight;
+		out<<"Item Weight :"<<n->itemweight<<"\n";
+		if(stoke-(n->itemweight)<0)
+			cout<<"\n\nSorry the stock is not available...plz try later....!";
+        else
+            stoke=stoke-(n->itemweight);cout<<"\n";
+        cout<<n->item<<" has labour charge of :";
+        cin>>n->labour;
+        out<<"Labour charge :"<<n->labour<<"\n";
+        n->grandtotal=((n->itemweight)*cost)+((n->labour)*n->itemweight);
+        out<<"\t Grand Total :"<<n->grandtotal;
+        cout<<"\nThe total cost including labour charge is :"<<n->grandtotal;
+        cout<<"\nHow much we recieved from customer :";cin>>n->cprice;
+        out<<"\nRecived Price :"<<n->cprice;
+        if((n->grandtotal)-(n->cprice)==0)
+            n->flag=1;
+        else
+            n->flag=0;
+            cout<<"\n\nThe customer has left to pay :"<<(n->grandtotal)-(n->cprice);
+        n->link=NULL;
+		return(n);   
+	}
+	else
+	{
+		   out<<"\n************************************************************************\n";
+		count++;
+		out<<"Bill NO. :"<<count<<"\n";
+		n->billno=count;
+		cout<<"\nEnter the name of customer :";fflush(stdin);
+		gets(n->cname);fflush(stdin);
+		out<<"Name :"<<n->cname<<"\n";
+		cout<<"\nEnter the address of customer :";
+		gets(n->caddress);fflush(stdin);
+		out<<"\t\tAddress :"<<n->caddress<<"\n";
+		cout<<"\nEnter the mobile no. of customer :";
+		out<<"Mobile No. :";
+		for(i=0;i<10;i++)
+		{
+			cin>>n->mob[i];
+			out<<n->mob[i];
+		}fflush(stdin);
+		cout<<"\nEnter the item purchaced by customer :";
+		gets(n->item);fflush(stdin);
+		out<<"\tItem purchased :"<<n->item<<"\t";
+		cout<<"\nEnter the weight of "<<n->item<<" :";
+		cin>>n->itemweight;
+		out<<"Item Weight :"<<n->itemweight<<"\n";
+		if(stoke-(n->itemweight)<0)
+			cout<<"\n\nSorry the stock is not available...plz try later....!";
+        else
+            stoke=stoke-(n->itemweight);cout<<"\n";
+        cout<<n->item<<" has labour charge of :";
+        cin>>n->labour;
+        out<<"Labour charge :"<<n->labour<<"\n";
+        n->grandtotal=((n->itemweight)*cost)+((n->labour)*n->itemweight);
+        cout<<"\nThe total cost including labour charge is :"<<n->grandtotal;
+        out<<"\t Grand Total :"<<n->grandtotal;
+        cout<<"\nHow much we recieved from customer :";cin>>n->cprice;
+        out<<"\nRecived Price :"<<n->cprice;
+        if((n->grandtotal)-(n->cprice)==0)
+            n->flag=1;
+        else
+            n->flag=0;
+            cout<<"\n\nThe customer has left to pay :"<<(n->grandtotal)-(n->cprice);
+            n->link=f;
+			return(n);
+		}
+	out.close();
+}
+void customer::cdisplay(customer *f)
+{
+	customer *temp;
+	temp=f;
+	if(temp==NULL)	
+	{
+		cout<<"\n There are no bill uptill now....!";
+	}
+	else
+	{
+		while(temp->link!=NULL)
+		{
+			cout<<"\nTodays gold Rate :\t"<<cost<<"\t\tLaboure charge of  "<<temp->item<<"is :"<<temp->labour;
+			cout<<"\nName of Customer :\t"<<temp->cname<<"\t\t\tBill NO. :\t"<<temp->billno;
+			cout<<"\n Address Of Customer :\t"<<temp->caddress;
+			cout<<"\nItem purchased :\t"<<temp->item<<"\t\tItem weight in gm :\t"<<temp->itemweight;
+			cout<<"\n Customer payed :\t"<<temp->cprice<<"\t\t Customer has to pay :\t"<<((temp->grandtotal)-(temp->cprice));
+			cout<<"\n******************************************************************************\n";
+			temp=temp->link;
+		}
+			cout<<"\nTodays gold Rate :\t"<<cost<<"\t\tLaboure charge of  "<<temp->item<<"is :"<<temp->labour;
+			cout<<"\nName of Customer :\t"<<temp->cname<<"\t\t\tBill NO. :\t"<<temp->billno;
+			cout<<"\n Address Of Customer :\t"<<temp->caddress;
+			cout<<"\nItem purchased :\t"<<temp->item<<"\t\tItem weight in gm :\t"<<temp->itemweight;
+			cout<<"\n Customer payed :\t"<<temp->cprice<<"\t\t Customer has to pay :\t"<<((temp->grandtotal)-(temp->cprice));
+			cout<<"\n******************************************************************************\n";
+	}
+}
+void customer::leftdisplay(customer *f)
+{
+	customer *temp;
+	temp=f;
+	if(temp==NULL)	
+	{
+		cout<<"\n There are no such bill uptill now....!";
+	}
+	else
+	{
+		while(temp!=NULL)
+		{
+			if(temp->flag==0)
+			{
+				cout<<"\nTodays gold Rate :\t"<<cost<<"\t\tLaboure charge of  "<<temp->item<<"is :"<<temp->labour;
+				cout<<"\nName of Customer :\t"<<temp->cname<<"\t\t\tBill NO. :\t"<<temp->billno;
+				cout<<"\n Address Of Customer :\t"<<temp->caddress;
+				cout<<"\nItem purchased :\t"<<temp->item<<"\t\tItem weight in gm :\t"<<temp->itemweight;
+				cout<<"\n Customer payed :\t"<<temp->cprice<<"\t\t Customer has to pay :\t"<<((temp->grandtotal)-(temp->cprice));
+				cout<<"\n******************************************************************************\n";
+		    }
+			temp=temp->link;
+		}
+		  /*if(temp->flag==0)
+		  {
+			cout<<"\nTodays gold Rate :\t"<<cost<<"\t\tLaboure charge of  "<<temp->item<<"is :"<<temp->labour;
+			cout<<"\nName of Customer :\t"<<temp->cname<<"\t\t\tBill NO. :\t"<<temp->billno;
+			cout<<"\n Address Of Customer :\t"<<temp->caddress;
+			cout<<"\nItem purchased :\t"<<temp->item<<"\t\tItem weight in gm :\t"<<temp->itemweight;
+			cout<<"\n Customer payed :\t"<<temp->cprice<<"\t\t Customer has to pay :\t"<<((temp->grandtotal)-(temp->cprice));
+			cout<<"\n******************************************************************************\n";
+	      }*/
+	}
+}
+int main()
+{
+	int ch;
+	customer *f=NULL,a;
+	cout<<"\t\t\t\t\t\t\tMangalDeep Jwellers";
+	cout<<"\nEnter the todays gold rate :";
+	cin>>cost;
+	cout<<"\nEnter the amount of stock :";cin>>stoke;
+	do{
+		cout<<"\n1)Create a bill\n2)display\n3)Display stock\n4)Display customer bill who as left to pay\n5)Exit";
+		cout<<"\nEnter your choice :";
+		cin>>ch;
+		switch(ch)
+		 {
+			case 1:f=a.cget(f);break;
+			case 2:a.cdisplay(f);break;
+			case 3:cout<<"\nStock is :\t"<<stoke<<"\n";break;
+			case 4:a.leftdisplay(f);break;
+			case 5:exit(0);
+		 }
+    }while(ch!=5);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
