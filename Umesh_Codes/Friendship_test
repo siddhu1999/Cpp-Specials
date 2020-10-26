@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<process.h>
+#include<dos.h>
+#include<string.h>
+int main()
+{
+	char n1[15],n2[15];
+	int count=0,m,n=0,i,j;
+	printf("\n\t\t\tFrienship test..... Have fun....!\n");
+	printf("\nEnter your name :");
+	gets(n1);
+	printf("\nEnter name of your friend name :");
+	gets(n2);
+	while(n1[i]!=NULL)
+	 {
+	 	j=0;
+	 	while(n2[j]!=NULL)
+	 	 {
+	 	 	if(n2[j]==n1[i])
+			  count++;
+			j++;	
+		 }
+	 	i++;
+	 }
+	n=strlen(n2);
+	if(m<=n)
+	 {
+	 	i=n;
+	 }
+	printf("\n\t\t=> Friendship between %s and %s\n",n1,n2);
+	printf("\n\t\t\t=> Friendship Percentage : %dpercent.\n\n\t\t\t=> Friendship Level : 0 ",((count)*100)/i);
+	for(m=0;m<i;m++)
+	 { 
+	 	if(m<count)
+		  printf("|");
+		else
+		  printf(" ");
+	 }
+	if(count>i)
+	  printf(".....===>  sorry record break.......(:.....(:");
+	else
+	 printf(" 100");
+	return(0);
+}
